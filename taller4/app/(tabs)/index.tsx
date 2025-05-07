@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { usePetStore } from '../../hooks/usePetStore';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+const { width } = Dimensions.get('window');
 
 export default function TabHomeScreen() {
   const router = useRouter();
@@ -10,41 +11,39 @@ export default function TabHomeScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* Fondo superior amarillo */}
+      <View style={styles.topBackground} />
+      {/* Fondo inferior azul con curva */}
+      <View style={styles.bottomBackground} />
+      {/* Huellas decorativas (emojis) */}
+      <Text style={[styles.paw, { top: 180, left: 30 }]}>🐾</Text>
+      <Text style={[styles.paw, { top: 350, right: 40, transform: [{ rotate: '20deg' }] }]}>🐾</Text>
+      <Text style={[styles.paw, { bottom: 80, left: 60, fontSize: 38 }]}>🐾</Text>
+      {/* Encabezado INICIO */}
+      <Text style={styles.inicio}>INICIO</Text>
+      <View style={styles.content}>
         <Text style={styles.title}>¡Hola de nuevo!</Text>
-        <Text style={styles.subtitle}>¿Cómo está {pet?.name} hoy?</Text>
-      </View>
-
-      <View style={styles.menuContainer}>
-        <TouchableOpacity 
-          style={styles.menuItem}
-          onPress={() => router.push('/(tabs)/chat' as any)}
-        >
-          <View style={styles.pawPrint}>
-            <MaterialCommunityIcons name="chat" size={40} color="#ee4e2d" />
-          </View>
-          <Text style={styles.menuText}>Chat</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.menuItem}
-          onPress={() => router.push('/(tabs)/simulator' as any)}
-        >
-          <View style={styles.pawPrint}>
-            <MaterialCommunityIcons name="calculator" size={40} color="#ee4e2d" />
-          </View>
-          <Text style={styles.menuText}>Simulador</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.menuItem}
-          onPress={() => router.push('/(tabs)/professionals' as any)}
-        >
-          <View style={styles.pawPrint}>
-            <MaterialCommunityIcons name="doctor" size={40} color="#ee4e2d" />
-          </View>
-          <Text style={styles.menuText}>Profesionales</Text>
-        </TouchableOpacity>
+        <Text style={styles.subtitle}>¿Qué deseas hacer?</Text>
+        <View style={styles.menuContainer}>
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={() => router.push('/(tabs)/chat' as any)}
+          >
+            <Text style={styles.menuText}>Chat con IA</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={() => router.push('/(tabs)/simulator' as any)}
+          >
+            <Text style={styles.menuText}>Probar simulador</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={() => router.push('/(tabs)/professionals' as any)}
+          >
+            <Text style={styles.menuText}>Hablar con profesionales</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -53,49 +52,86 @@ export default function TabHomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdfffc',
+    backgroundColor: 'transparent',
+    position: 'relative',
   },
-  header: {
-    padding: 20,
+  topBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: 220,
+    backgroundColor: '#ffe07a',
+    borderBottomLeftRadius: 80,
+    borderBottomRightRadius: 80,
+    zIndex: 0,
+  },
+  bottomBackground: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: '65%',
     backgroundColor: '#99d4fd',
+    zIndex: 0,
+  },
+  paw: {
+    position: 'absolute',
+    fontSize: 44,
+    opacity: 0.25,
+    zIndex: 1,
+  },
+  inicio: {
+    position: 'absolute',
+    top: 18,
+    left: 18,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+    color: '#222',
+    zIndex: 2,
+    fontFamily: 'monospace',
+  },
+  content: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: 80,
+    zIndex: 2,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#ee4e2d',
+    color: '#222',
     marginBottom: 10,
+    fontFamily: 'sans-serif-condensed',
   },
   subtitle: {
-    fontSize: 18,
-    color: '#fdfffc',
+    fontSize: 20,
+    color: '#222',
+    marginBottom: 30,
+    fontWeight: '600',
   },
   menuContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    width: '100%',
     alignItems: 'center',
-    padding: 20,
+    marginTop: 10,
   },
   menuItem: {
+    backgroundColor: '#6ee86e',
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 30,
+    marginVertical: 10,
+    width: '80%',
     alignItems: 'center',
-    width: '30%',
-  },
-  pawPrint: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#f7c639',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
     borderWidth: 2,
-    borderColor: '#90ee90',
+    borderColor: '#222',
+    elevation: 2,
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#ee4e2d',
-    textAlign: 'center',
+    color: '#222',
   },
 });
