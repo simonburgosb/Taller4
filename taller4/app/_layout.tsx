@@ -7,7 +7,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { usePetStore } from '../hooks/usePetStore';
 import { useRouter } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, Text } from 'react-native';
+import { SourGummy_400Regular } from '@expo-google-fonts/sour-gummy';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -15,6 +16,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
+    SourGummy_400Regular,
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
   const router = useRouter();
@@ -38,49 +40,18 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#99d4fd',
-          },
-          headerTintColor: '#fdfffc',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            color: '#ee4e2d',
-          },
-          contentStyle: {
-            backgroundColor: '#fdfffc',
-          },
-        }}
-      >
-        <Stack.Screen
-          name="home"
-          options={{
+      {/* <Text style={{ flex: 1 }}> */}
+        <Stack
+          screenOptions={{
             headerShown: false,
+            contentStyle: {
+              backgroundColor: '#fdfffc',
+            },
           }}
-        />
-        <Stack.Screen
-          name="survey"
-          options={{
-            title: 'Encuesta',
-            headerShown: true,
-          }}
-        />
-        <Stack.Screen
-          name="results"
-          options={{
-            title: 'Resultados',
-            headerShown: true,
-          }}
-        />
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
+        >
+        </Stack>
+        <StatusBar style="auto" />
+      {/* </Text> */}
     </ThemeProvider>
   );
 }

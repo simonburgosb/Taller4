@@ -13,44 +13,41 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Image source={{ uri: pet?.image }} style={styles.profileImage} />
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+      {/* Fondo azul con huellas */}
+      <View style={styles.headerBg}>
+        {/* Huellas (círculos) */}
+        <View style={[styles.paw, { top: 30, left: 40 }]} />
+        <View style={[styles.paw, { top: 60, left: 120, width: 30, height: 30 }]} />
+        <View style={[styles.paw, { top: 10, left: 200, width: 40, height: 40 }]} />
+        <View style={[styles.paw, { top: 70, left: 250, width: 25, height: 25 }]} />
+        {/* Foto de perfil */}
+        <View style={styles.profileCircle}>
+          <Image source={{ uri: pet?.image }} style={styles.profileImage} />
+        </View>
         <Text style={styles.name}>{pet?.name}</Text>
-        <Text style={styles.type}>{pet?.type}</Text>
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Información Personal</Text>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Nombre:</Text>
-          <Text style={styles.infoValue}>{pet?.name}</Text>
+      {/* Tarjeta de información personal */}
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Información Personal</Text>
+          <View style={styles.infoRow}><Text style={styles.infoLabel}>Nombre:</Text><Text style={styles.infoValue}>{pet?.name}</Text></View>
+          <View style={styles.infoRow}><Text style={styles.infoLabel}>Tipo:</Text><Text style={styles.infoValue}>{pet?.type}</Text></View>
+          <View style={styles.infoRow}><Text style={styles.infoLabel}>Rasgos:</Text><Text style={styles.infoValue}>{pet?.traits.join(', ')}</Text></View>
         </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Tipo:</Text>
-          <Text style={styles.infoValue}>{pet?.type}</Text>
-        </View>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Rasgos:</Text>
-          <Text style={styles.infoValue}>{pet?.traits.join(', ')}</Text>
-        </View>
-      </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Preferencias</Text>
-        <View style={styles.preferenceItem}>
-          <Text style={styles.preferenceText}>Actividad física: Alta</Text>
-        </View>
-        <View style={styles.preferenceItem}>
-          <Text style={styles.preferenceText}>Alimentación: Balanceada</Text>
-        </View>
-        <View style={styles.preferenceItem}>
-          <Text style={styles.preferenceText}>Socialización: Alta</Text>
+        {/* Tarjeta de preferencias */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Preferencias</Text>
+          <View style={styles.preferenceItem}><Text style={styles.preferenceText}>Actividad física: Alta</Text></View>
+          <View style={styles.preferenceItem}><Text style={styles.preferenceText}>Alimentación: Balanceada</Text></View>
+          <View style={styles.preferenceItem}><Text style={styles.preferenceText}>Socialización: Alta</Text></View>
         </View>
       </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
+        <Text style={styles.logoutButtonText}>CERRAR SESIÓN</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -61,82 +58,124 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fdfffc',
   },
-  header: {
-    padding: 20,
-    backgroundColor: '#99d4fd',
+  headerBg: {
+    backgroundColor: '#6ec1f6',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     alignItems: 'center',
+    paddingBottom: 20,
+    paddingTop: 30,
+    position: 'relative',
+    overflow: 'hidden',
   },
-  profileImage: {
+  paw: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    backgroundColor: '#99d4fd',
+    borderRadius: 25,
+    opacity: 0.6,
+    zIndex: 0,
+  },
+  profileCircle: {
+    backgroundColor: '#f7c639',
     width: 120,
     height: 120,
     borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 4,
     borderColor: '#ee4e2d',
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 10,
+    zIndex: 1,
+  },
+  profileImage: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
   },
   name: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#ee4e2d',
-    marginBottom: 5,
+    color: '#222',
+    marginTop: 5,
+    zIndex: 1,
+    fontFamily: 'SourGummy_400Regular',
   },
-  type: {
-    fontSize: 18,
-    color: '#fdfffc',
+  cardContainer: {
+    marginTop: -30,
+    paddingHorizontal: 20,
   },
   card: {
-    margin: 20,
-    backgroundColor: '#f7c639',
-    borderRadius: 15,
-    padding: 20,
-    borderWidth: 2,
-    borderColor: '#90ee90',
+    backgroundColor: '#90ee90',
+    borderRadius: 20,
+    padding: 18,
+    marginBottom: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   cardTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#ee4e2d',
-    marginBottom: 15,
+    color: '#222',
+    backgroundColor: '#baffc9',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginBottom: 10,
+    alignSelf: 'flex-start',
+    borderWidth: 2,
+    borderColor: '#222',
+    fontFamily: 'SourGummy_400Regular',
   },
   infoRow: {
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   infoLabel: {
     flex: 1,
     fontSize: 16,
-    color: '#99d4fd',
+    color: '#222',
     fontWeight: 'bold',
+    fontFamily: 'SourGummy_400Regular',
   },
   infoValue: {
     flex: 2,
     fontSize: 16,
-    color: '#fdfffc',
+    color: '#222',
+    fontFamily: 'SourGummy_400Regular',
   },
   preferenceItem: {
-    backgroundColor: '#99d4fd',
-    padding: 15,
+    backgroundColor: '#f7c639',
+    padding: 12,
     borderRadius: 10,
     marginBottom: 10,
-    borderWidth: 2,
-    borderColor: '#90ee90',
+    alignItems: 'center',
   },
   preferenceText: {
-    color: '#fdfffc',
+    color: '#222',
     fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'SourGummy_400Regular',
   },
   logoutButton: {
     backgroundColor: '#ee4e2d',
-    padding: 15,
-    borderRadius: 10,
-    margin: 20,
+    padding: 18,
+    borderRadius: 12,
+    margin: 30,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#90ee90',
+    borderWidth: 0,
+    elevation: 2,
   },
   logoutButtonText: {
     color: '#fdfffc',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
+    letterSpacing: 1,
+    fontFamily: 'SourGummy_400Regular',
   },
 }); 

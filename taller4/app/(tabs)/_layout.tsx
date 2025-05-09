@@ -1,72 +1,80 @@
 import { Stack } from 'expo-router';
 import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#ee4e2d',
-        tabBarInactiveTintColor: '#99d4fd',
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#fff',
         tabBarStyle: {
-          backgroundColor: '#fdfffc',
-          borderTopColor: '#90ee90',
-          borderTopWidth: 2,
+          flexDirection: 'row',
+          backgroundColor: '#3CB4E7', // Azul para la barra de navegación
+          paddingVertical: 10,
+          justifyContent: 'space-around',
+          borderTopWidth: 1,
+          borderTopColor: '#2A9BCB',
         },
-        headerStyle: {
-          backgroundColor: '#99d4fd',
-        },
-        headerTintColor: '#fdfffc',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          color: '#ee4e2d',
-        },
+        headerShown: false,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Inicio',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" size={size} color={color} />
           ),
           tabBarStyle: { display: 'none' },
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
         name="professionals"
         options={{
-          title: 'Profesionales',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="doctor" size={size} color={color} />
           ),
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
         name="simulator"
         options={{
-          title: 'Simulador',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="calculator" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? require('../../assets/iconos/simulador amarillo.svg') : require('../../assets/iconos/simulador blanco.svg')}
+              style={{ width: 24, height: 24 }}
+            />
           ),
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
         name="chat"
         options={{
-          title: 'Chat',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="chat" size={size} color={color} />
           ),
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Perfil',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? require('../../assets/iconos/perfilAmarillo.svg') : require('../../assets/iconos/perfilBlanco.svg')}
+              style={{ 
+                width: 24, 
+                height: 24,     
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 12,}}
+            />
           ),
+          tabBarLabel: () => null,
         }}
       />
     </Tabs>
