@@ -1,47 +1,57 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
-import { usePetStore } from '../../hooks/usePetStore';
 
 const { width } = Dimensions.get('window');
 
-export default function TabHomeScreen() {
+export default function WelcomeScreen() {
   const router = useRouter();
-  const { pet } = usePetStore();
 
   return (
     <View style={styles.container}>
-      {/* Fondo superior amarillo */}
+      {/* Fondo amarillo */}
       <View style={styles.topBackground} />
-      {/* Fondo inferior azul con curva */}
-      <View style={styles.bottomBackground} />
-      {/* Huellas decorativas (emojis) */}
-      <Text style={[styles.paw, { top: 180, left: 30 }]}>🐾</Text>
-      <Text style={[styles.paw, { top: 350, right: 40, transform: [{ rotate: '20deg' }] }]}>🐾</Text>
-      <Text style={[styles.paw, { bottom: 80, left: 60, fontSize: 38 }]}>🐾</Text>
-      {/* Encabezado INICIO */}
-      <Text style={styles.inicio}>INICIO</Text>
+      
+      {/* Fondo azul con onda */}
+      <View style={styles.bottomBackground}>
+        {/* Huellas decorativas */}
+        <View style={[styles.pawPrint, { bottom: '60%', right: '15%' }]} />
+        <View style={[styles.pawPrint, { bottom: '30%', left: '10%' }]} />
+        <View style={[styles.pawPrint, { bottom: '10%', right: '25%' }]} />
+        <View style={[styles.pawPrint, { bottom: '45%', left: '25%' }]} />
+      </View>
+      
+      {/* Encabezado con flecha */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>INICIO</Text>
+        <Text style={styles.arrow}>→</Text>
+      </View>
+      
+      {/* Contenido principal */}
       <View style={styles.content}>
-        <Text style={styles.title}>¡Hola de nuevo!</Text>
-        <Text style={styles.subtitle}>¿Qué deseas hacer?</Text>
-        <View style={styles.menuContainer}>
+        <Text style={styles.welcomeText}>¡BIENVENIDO!</Text>
+        
+        {/* Botones de menú */}
+        <View style={styles.buttonContainer}>
           <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={() => router.push('/(tabs)/chat' as any)}
+            style={styles.button}
+            onPress={() => router.push('/(tabs)/chat')}
           >
-            <Text style={styles.menuText}>Chat con IA</Text>
+            <Text style={styles.buttonText}>Chat con IA</Text>
           </TouchableOpacity>
+          
           <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={() => router.push('/(tabs)/simulator' as any)}
+            style={styles.button}
+            onPress={() => router.push('/(tabs)/simulator')}
           >
-            <Text style={styles.menuText}>Probar simulador</Text>
+            <Text style={styles.buttonText}>Probar simulador</Text>
           </TouchableOpacity>
+          
           <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={() => router.push('/(tabs)/professionals' as any)}
+            style={styles.button}
+            onPress={() => router.push('/(tabs)/professionals')}
           >
-            <Text style={styles.menuText}>Hablar con profesionales</Text>
+            <Text style={styles.buttonText}>Hablar con profesionales</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -51,87 +61,85 @@ export default function TabHomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: 'SourGummy_400Regular',
     flex: 1,
-    backgroundColor: 'transparent',
-    position: 'relative',
+    backgroundColor: 'white',
   },
   topBackground: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
-    height: 220,
-    backgroundColor: '#ffe07a',
-    borderBottomLeftRadius: 80,
-    borderBottomRightRadius: 80,
-    zIndex: 0,
+    right: 0,
+    height: '40%',
+    backgroundColor: '#FDCF4A', // Color amarillo más cercano al de la imagen
   },
   bottomBackground: {
     position: 'absolute',
-    bottom: 0,
     left: 0,
-    width: '100%',
-    height: '65%',
-    backgroundColor: '#99d4fd',
-    zIndex: 0,
+    right: 0,
+    bottom: 0,
+    height: '70%',
+    backgroundColor: '#8CD3FF', // Color azul más claro similar al de la imagen
+    borderTopLeftRadius: width * 0.5,
+    borderTopRightRadius: width * 0.5,
   },
-  paw: {
+  pawPrint: {
     position: 'absolute',
-    fontSize: 44,
-    opacity: 0.25,
+    width: 25,
+    height: 25,
+    borderRadius: 12.5,
+    backgroundColor: '#5CB3E5', // Huellas en azul más oscuro
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 50,
     zIndex: 1,
   },
-  inicio: {
-    position: 'absolute',
-    top: 18,
-    left: 18,
+  headerText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#000',
     textDecorationLine: 'underline',
-    color: '#222',
-    zIndex: 2,
-    fontFamily: 'monospace',
+    fontFamily: 'SourGummy_400Regular',
+  },
+  arrow: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   content: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginTop: 80,
-    zIndex: 2,
+    paddingTop: '20%',
+    zIndex: 1,
   },
-  title: {
+  welcomeText: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#222',
-    marginBottom: 10,
-    fontFamily: 'sans-serif-condensed',
+    color: '#000',
+    marginBottom: 50,
+    fontFamily: 'SourGummy_400Regular',
   },
-  subtitle: {
-    fontSize: 20,
-    color: '#222',
-    marginBottom: 30,
-    fontWeight: '600',
-  },
-  menuContainer: {
+  buttonContainer: {
     width: '100%',
     alignItems: 'center',
-    marginTop: 10,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
-  menuItem: {
-    backgroundColor: '#6ee86e',
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 30,
-    marginVertical: 10,
+  button: {
+    backgroundColor: '#6DD26D', // Verde similar al de la imagen
     width: '80%',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#222',
-    elevation: 2,
   },
-  menuText: {
+  buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#222',
+    fontWeight: '600',
+    color: '#000',
+    fontFamily: 'SourGummy_400Regular',
   },
 });

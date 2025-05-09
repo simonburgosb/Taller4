@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { usePetStore } from '../../hooks/usePetStore';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function SimulatorScreen() {
   const { pet } = usePetStore();
-  const [happiness, setHappiness] = useState(50);
-  const [hunger, setHunger] = useState(50);
-  const [energy, setEnergy] = useState(50);
+  const [happiness, setHappiness] = useState(84);
+  const [hunger, setHunger] = useState(84);
+  const [energy, setEnergy] = useState(84);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,48 +36,85 @@ export default function SimulatorScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.petContainer}>
-        <Image source={{ uri: pet?.image }} style={styles.petImage} />
-        <Text style={styles.petName}>{pet?.name}</Text>
-        <Text style={styles.petType}>{pet?.type}</Text>
+      {/* Header with curved bottom */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>SIMULADOR</Text>
+        
+        {/* Decorative paw prints */}
+        <View style={[styles.pawPrint, { top: 20, right: 20, width: 30, height: 30 }]} />
+        <View style={[styles.pawPrint, { top: 60, right: 40, width: 50, height: 50 }]} />
+        <View style={[styles.pawPrint, { top: 40, left: 230, width: 70, height: 70 }]} />
+        
+        {/* Pet avatar in circle */}
+        <View style={styles.avatarContainer}>
+          <Image 
+            source={{ uri: pet?.image || 'https://placekitten.com/200/200' }} 
+            style={styles.petAvatar} 
+          />
+        </View>
       </View>
-
+      
+      {/* Pet status question */}
+      <Text style={styles.statusQuestion}>¿Cómo está Rocky?</Text>
+      
+      {/* Stats container */}
       <View style={styles.statsContainer}>
-        <View style={styles.stat}>
+        <View style={styles.statCard}>
           <Text style={styles.statLabel}>Felicidad</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: `${happiness}%` }]} />
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar, { width: `${happiness}%` }]} />
           </View>
           <Text style={styles.statValue}>{happiness}%</Text>
         </View>
-
-        <View style={styles.stat}>
+        
+        <View style={styles.statCard}>
           <Text style={styles.statLabel}>Hambre</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: `${hunger}%` }]} />
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar, { width: `${hunger}%` }]} />
           </View>
           <Text style={styles.statValue}>{hunger}%</Text>
         </View>
-
-        <View style={styles.stat}>
+        
+        <View style={styles.statCard}>
           <Text style={styles.statLabel}>Energía</Text>
-          <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: `${energy}%` }]} />
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar, { width: `${energy}%` }]} />
           </View>
           <Text style={styles.statValue}>{energy}%</Text>
         </View>
       </View>
-
+      
+      {/* Needs section */}
+      <Text style={styles.needsTitle}>Necesidades</Text>
+      
+      {/* Action buttons */}
       <View style={styles.actionsContainer}>
-        <TouchableOpacity style={styles.actionButton} onPress={handleFeed}>
+        <View style={styles.actionItem}>
+          <TouchableOpacity style={styles.actionButton} onPress={handleFeed}>
+            <Image 
+              source={{ uri: 'https://placekitten.com/100/100' }} // Placeholder
+              style={styles.actionIcon} 
+            />
+          </TouchableOpacity>
           <Text style={styles.actionText}>Alimentar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={handlePlay}>
+        </View>
+        
+        <View style={styles.actionItem}>
+          <TouchableOpacity style={styles.actionButton} onPress={handlePlay}>
+            <Image 
+              source={{ uri: 'https://placekitten.com/101/101' }} // Placeholder
+              style={styles.actionIcon} 
+            />
+          </TouchableOpacity>
           <Text style={styles.actionText}>Jugar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton} onPress={handleRest}>
+        </View>
+        
+        <View style={styles.actionItem}>
+          <TouchableOpacity style={styles.actionButton} onPress={handleRest}>
+            <MaterialCommunityIcons name="sleep" size={32} color="#333" />
+          </TouchableOpacity>
           <Text style={styles.actionText}>Descansar</Text>
-        </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -85,70 +123,131 @@ export default function SimulatorScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: 'white',
   },
-  petContainer: {
+  header: {
+    height: 180,
+    backgroundColor: '#FF7B6B', // Coral color like in the image
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    position: 'relative',
+    paddingTop: 40,
+    paddingHorizontal: 20,
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#000',
+    textDecorationLine: 'underline',
+    fontFamily: 'SourGummy_400Regular',
+  },
+  pawPrint: {
+    position: 'absolute',
+    borderRadius: 50,
+    backgroundColor: '#FF5A45', // Darker coral for paw prints
+  },
+  avatarContainer: {
+    position: 'absolute',
+    bottom: -40,
+    alignSelf: 'center',
+    width: 80,
+    height: 80,
+    backgroundColor: '#FF7B6B', // Same as header
+    borderRadius: 40,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    elevation: 4,
   },
-  petImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 10,
+  petAvatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
   },
-  petName: {
+  statusQuestion: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-  },
-  petType: {
-    fontSize: 16,
-    color: '#666',
+    textAlign: 'center',
+    marginTop: 50,
+    marginBottom: 20,
+    fontFamily: 'SourGummy_400Regular',
   },
   statsContainer: {
-    marginBottom: 30,
+    paddingHorizontal: 20,
   },
-  stat: {
-    marginBottom: 15,
+  statCard: {
+    backgroundColor: '#7ADE77', // Green card background
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   statLabel: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+    width: '25%',
+    fontFamily: 'SourGummy_400Regular',
   },
-  progressBar: {
-    height: 10,
-    backgroundColor: '#E0E0E0',
-    borderRadius: 5,
+  progressBarContainer: {
+    height: 20,
+    backgroundColor: '#FF7B6B', // Coral background for empty progress
+    borderRadius: 10,
+    flex: 1,
+    marginHorizontal: 10,
     overflow: 'hidden',
   },
-  progressFill: {
+  progressBar: {
     height: '100%',
-    backgroundColor: '#4CAF50',
-    borderRadius: 5,
+    backgroundColor: '#333', // Dark color for the progress bar
+    borderRadius: 10,
   },
   statValue: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+    width: '20%',
+    textAlign: 'right',
+  },
+  needsTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 20,
+    marginBottom: 15,
+    fontFamily: 'SourGummy_400Regular',
+    paddingHorizontal: 20,
   },
   actionsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    paddingHorizontal: 20,
+    marginTop: 10,
   },
-  actionButton: {
-    backgroundColor: '#4CAF50',
-    padding: 15,
-    borderRadius: 10,
-    flex: 1,
-    marginHorizontal: 5,
+  actionItem: {
     alignItems: 'center',
   },
-  actionText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+  actionButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#FDCF4A', // Yellow for buttons
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
   },
-}); 
+  actionIcon: {
+    width: 40,
+    height: 40,
+  },
+  actionText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+    fontFamily: 'SourGummy_400Regular',
+  },
+});
