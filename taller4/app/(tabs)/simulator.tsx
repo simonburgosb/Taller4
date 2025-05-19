@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { usePetStore } from '../../hooks/usePetStore';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { SvgXml } from 'react-native-svg';
+
+// Importar los SVGs como strings
+const huellaSimulador1 = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#e6b800"/>
+<path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="#e6b800"/>
+</svg>`;
+
+const huellaSimulador2 = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="#e6b800"/>
+<path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="#e6b800"/>
+</svg>`;
 
 export default function SimulatorScreen() {
   const { pet } = usePetStore();
@@ -40,10 +52,19 @@ export default function SimulatorScreen() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>SIMULADOR</Text>
         
-        {/* Decorative paw prints */}
-        <View style={[styles.pawPrint, { top: 20, right: 20, width: 30, height: 30 }]} />
-        <View style={[styles.pawPrint, { top: 60, right: 40, width: 50, height: 50 }]} />
-        <View style={[styles.pawPrint, { top: 40, left: 230, width: 70, height: 70 }]} />
+        {/* Huellas decorativas */}
+        <View style={[styles.pawPrint, { top: 20, left: 20 }]}>
+          <SvgXml xml={huellaSimulador1} width={30} height={30} />
+        </View>
+        <View style={[styles.pawPrint, { top: 40, right: 30 }]}>
+          <SvgXml xml={huellaSimulador2} width={25} height={25} />
+        </View>
+        <View style={[styles.pawPrint, { bottom: 20, left: 40 }]}>
+          <SvgXml xml={huellaSimulador1} width={35} height={35} />
+        </View>
+        <View style={[styles.pawPrint, { bottom: 30, right: 40 }]}>
+          <SvgXml xml={huellaSimulador2} width={30} height={30} />
+        </View>
         
         {/* Pet avatar in circle */}
         <View style={styles.avatarContainer}>

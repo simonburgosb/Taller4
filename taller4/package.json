@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo-google-fonts/sour-gummy": "^0.3.0",
     "@expo/vector-icons": "^14.0.2",
+    "@google/generative-ai": "^0.24.1",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.1.6",
@@ -41,6 +42,7 @@
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "^4.12.0",
     "react-native-screens": "~4.4.0",
+    "react-native-svg": "^15.12.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "zustand": "^5.0.3"
